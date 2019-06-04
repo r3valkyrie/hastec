@@ -11,10 +11,16 @@ Most GNU/Linux systems should come with these libraries already.
 
 ### Installation
 ```
-git clone https://github.com/r3valkyrie/hastec.git       # clone the repo
-cd hastec                                                # cd into the repo
-make                                                     # compile the program
-sudo make install                                        # install the program
+git clone https://github.com/r3valkyrie/hastec.git       # clone the repo.
+cd hastec                                                # cd into the repo.
+make                                                     # compile the program.
+sudo make install                                        # install the program.
+```
+
+### Usage
+```
+./haste                                                  # Standalone accepts input until an EOF is sent (CTRL-D on GNU/Linux).
+cat file.txt | haste                                     # Accepts input piped from stdout.
 ```
 
 ### Configuration
