@@ -46,7 +46,7 @@ size_t print_url(void *buffer, size_t size, size_t nmemb, void *userp)		/* libcu
 	parsed_json = json_tokener_parse(buffer);
 
 	json_object_object_get_ex(parsed_json, "key", &key);
-	printf(HASTEBIN_URL"/%s\n", json_object_get_string(key));
+	printf("\n"HASTEBIN_URL"/%s\n", json_object_get_string(key));
 }
 
 int post_input(char *dat)
