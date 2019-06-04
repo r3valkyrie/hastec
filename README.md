@@ -3,7 +3,6 @@
 This is a small thing I wrote while learning C. It's a program that takes input from stdin and uploads it to my Hastebin.
 
 ### Requirements
-Most GNU/Linux systems should come with these libraries already.
 
 * make
 * libcurl
