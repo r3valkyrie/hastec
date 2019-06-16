@@ -5,6 +5,7 @@ This is a small thing I wrote while learning C. It's a program that takes input 
 ### Requirements
 
 * make
+* pkg-config
 * gcc
 * libcurl
 * libjson-c
