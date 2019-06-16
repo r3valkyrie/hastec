@@ -8,7 +8,7 @@ endif
 all: build 
 
 build:
-	$(CC) $(CFLAGS) -o haste haste.c
+	$(CC) -o haste haste.c $(CFLAGS)
 
 install: haste
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
