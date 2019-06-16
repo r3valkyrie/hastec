@@ -1,3 +1,4 @@
+[![forthebadge](https://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](https://forthebadge.com)
 ## hastec - a small hastebin client written in C
 
 This is a small thing I wrote while learning C. It's a program that takes input from stdin and uploads it to my Hastebin.
