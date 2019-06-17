@@ -16,7 +16,7 @@
 
 #define HASTEBIN_URL "https://haste.r3valkyrie.com"				/* Hastebin URL */
 
-char *get_input(FILE* fp, size_t size){						/* Dynamically allocate enough memory for the user input */
+char *dyn_mem_allocate(FILE* fp, size_t size){						/* Dynamically allocate enough memory for the user input */
     char *str;
     int ch;
     size_t len = 0;
@@ -77,7 +77,7 @@ int post_input(char *dat)
 int main(void)
 {
 	char *dat;
-	dat = get_input(stdin, 10);
+	dat = dyn_mem_allocate(stdin, 10);
 
 	post_input(dat);
 
