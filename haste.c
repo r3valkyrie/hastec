@@ -16,7 +16,8 @@
 
 #define HASTEBIN_URL "https://haste.r3valkyrie.com" 				/* Hastebin URL */
 
-char * dyn_mem_allocate(FILE * fp, size_t size) {				/* Dynamically allocate enough memory for the user input */
+char * dyn_mem_allocate(FILE * fp, size_t size)					/* Dynamically allocate enough memory for the user input */
+{
     char * str;
     int ch;
     size_t len = 0;
@@ -38,7 +39,8 @@ char * dyn_mem_allocate(FILE * fp, size_t size) {				/* Dynamically allocate eno
     return realloc(str, sizeof(char) * len);
 }
 
-size_t print_url(void * buffer, size_t size, size_t nmemb, void * userp) 	/* libcurl callback function, prints hastebin URL */ {
+size_t print_url(void * buffer, size_t size, size_t nmemb, void * userp) 	/* libcurl callback function, prints hastebin URL */
+{
     struct json_object * parsed_json;
     struct json_object * key;
 
@@ -49,7 +51,8 @@ size_t print_url(void * buffer, size_t size, size_t nmemb, void * userp) 	/* lib
         HASTEBIN_URL "/%s\n", json_object_get_string(key));
 }
 
-int post_input(char * dat) {
+int post_input(char * dat)
+{
     char * url = HASTEBIN_URL "/documents"; 					/* The URL we are sending the POST request to */
 
     CURL * curl;
@@ -72,7 +75,8 @@ int post_input(char * dat) {
     return 0;
 }
 
-int main(void) {
+int main(void)
+{
     char * dat;
     dat = dyn_mem_allocate(stdin, 1024);
 
