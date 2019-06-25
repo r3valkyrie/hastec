@@ -1,5 +1,5 @@
 CC = gcc							# Compiler.
-CFLAGS = $(shell pkg-config --libs json-c libcurl)		# Compiler flags.
+CFLAGS = -march=native -O2 -std=c11 $(shell pkg-config --libs json-c libcurl)		# Compiler flags.
 
 ifeq ($(PREFIX),)
 	PREFIX := /usr/local
