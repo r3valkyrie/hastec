@@ -16,27 +16,27 @@
 
 #define HASTEBIN_URL "https://haste.r3valkyrie.com" 				/* Hastebin URL */
 
-char * dyn_mem_allocate(FILE * fp, size_t size)					/* Dynamically allocate enough memory for the user input */
+uint8_t * dyn_mem_allocate(FILE * fp, size_t size)					/* Dynamically allocate enough memory for the user input */
 {
-    char * str;
-    int ch;
+    uint8_t * str;
+    int64_t ch;
     size_t len = 0;
 
-    str = realloc(NULL, sizeof(char) * size);
+    str = realloc(NULL, sizeof(uint8_t) * size);
 
     if (!str) return str;
 
     while ((ch = fgetc(fp)) != EOF) {
         str[len++] = ch;
         if (len == size) {
-            str = realloc(str, sizeof(char) * (size += 1024));
+            str = realloc(str, sizeof(uint8_t) * (size += 1024));
             if (!str) return str;
         }
     }
 
     str[len++] = '\0';
 
-    return realloc(str, sizeof(char) * len);
+    return realloc(str, sizeof(uint8_t) * len);
 }
 
 size_t print_url(void * buffer, size_t size, size_t nmemb, void * userp) 	/* libcurl callback function, prints hastebin URL */
@@ -51,9 +51,9 @@ size_t print_url(void * buffer, size_t size, size_t nmemb, void * userp) 	/* lib
         HASTEBIN_URL "/%s\n", json_object_get_string(key));
 }
 
-int post_input(char * dat)
+int64_t post_input(uint8_t * dat)
 {
-    char * url = HASTEBIN_URL "/documents"; 					/* The URL we are sending the POST request to */
+    uint8_t * url = HASTEBIN_URL "/documents"; 					/* The URL we are sending the POST request to */
 
     CURL * curl;
     CURLcode res;
@@ -75,9 +75,9 @@ int post_input(char * dat)
     return 0;
 }
 
-int main(void)
+int64_t main(void)
 {
-    char * dat;
+    uint8_t * dat;
     dat = dyn_mem_allocate(stdin, 1024);
 
     post_input(dat);
