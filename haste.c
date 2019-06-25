@@ -17,7 +17,7 @@
  */
 
 
-uint8_t * dyn_mem_allocate(FILE * fp, size_t size)
+uint8_t * auto_realloc(FILE * fp, size_t size)
 {
         uint8_t * str;
         int64_t ch;
@@ -43,7 +43,7 @@ uint8_t * dyn_mem_allocate(FILE * fp, size_t size)
 }
 
 
-size_t print_url(void * buffer, size_t size, size_t nmemb, void * userp)
+size_t return_url(void * buffer, size_t size, size_t nmemb, void * userp)
 {
         struct json_object * parsed_json;
         struct json_object * key;
@@ -68,7 +68,7 @@ int64_t post_input(uint8_t * dat)
 
                 curl_easy_setopt(curl, CURLOPT_URL, url);
                 curl_easy_setopt(curl, CURLOPT_POSTFIELDS, dat);
-                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, print_url);
+                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, return_url);
 
                 res = curl_easy_perform(curl);
 
@@ -85,7 +85,7 @@ int64_t main(void)
 {
         uint8_t * dat;
 
-        dat = dyn_mem_allocate(stdin, 1024);
+        dat = auto_realloc(stdin, 1024);
 
         post_input(dat);
         free(dat);
