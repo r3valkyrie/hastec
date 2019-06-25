@@ -8,7 +8,7 @@ This is a small thing I wrote while learning C. It's a program that takes input 
 * make
 * pkg-config
 * gcc
-* libcurl
+* libcurl (openssl)
 * libjson-c
 
 ### Installation
