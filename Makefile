@@ -1,4 +1,4 @@
-CC = gcc
+CC = gcc -std=c11 -pedantic-errors
 CFLAGS = -march=native -O2 -std=c11 $(shell pkg-config --libs json-c libcurl)
 
 ifeq ($(PREFIX),)
