@@ -22,7 +22,7 @@ sudo make install                                        # install the program.
 ### Usage
 ```
 ./haste                                                  # Standalone accepts input until an EOF is sent (CTRL-D on GNU/Linux).
-cat file.txt | haste                                     # Accepts input piped from stdout.
+cat file.txt | haste                                     # Input stream.
 ```
 
 ### Configuration
