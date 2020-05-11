@@ -57,7 +57,7 @@ int main()
         paste.array[paste.used-1] = 0;
     }
 
-    printf("%s", post_paste(paste.array));
+    post_paste(paste.array);
 
     free(paste.array);
     paste.array = NULL;
