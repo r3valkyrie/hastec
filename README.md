@@ -9,7 +9,6 @@ This is a small thing I wrote while learning C. It's a program that takes input 
 * pkg-config
 * gcc
 * libcurl (openssl)
-* libjson-c
 
 ### Installation
 ```

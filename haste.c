@@ -1,9 +1,7 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <json-c/json_tokener.h>
-#include <json-c/json_object.h>
 #include <curl/curl.h>
+#include "vector.h"
 
 #define HASTEBIN_URL "https://haste.r3valkyrie.com"
 
@@ -18,81 +16,52 @@
  */
 
 
-char * auto_realloc(FILE * fp, size_t size)
+char print_url(char *res)
 {
-        char * str;
-        int ch;
-        size_t len = 0;
-
-        str = realloc(NULL, sizeof(int) * size);
-
-        if (!str) return str;
-
-        while ((ch = fgetc(fp)) != EOF) {
-                str[len++] = ch;
-
-                if (len == size) {
-                        str = realloc(str, sizeof(int) * (size += 1024));
-
-                        if (!str) return str;
-                }
-        }
-
-        len = strlen(str);
-        if (str[len-1] == '\n'){
-            str[len-1] = 0;
-        }
-
-        return realloc(str, sizeof(int) * len);
+    int start = 8;
+    int len = 10;
+    printf(HASTEBIN_URL "/%.*s\n", len, res + start);
 }
 
-
-size_t return_url(void * buffer, size_t size, size_t nmemb, void * userp)
+CURLcode post_paste(char * data)
 {
-        struct json_object * parsed_json;
-        struct json_object * key;
+    char * url = HASTEBIN_URL "/documents";
+    CURL * curl;
 
-        parsed_json = json_tokener_parse(buffer);
+    curl = curl_easy_init();
 
-        json_object_object_get_ex(parsed_json, "key", & key);
-        printf(HASTEBIN_URL "/%s\n", json_object_get_string(key));
-
-        return 0;
+    if (curl)
+    {
+        curl_easy_setopt(curl, CURLOPT_URL, url);
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, print_url);
+        curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
+    }
+    return 0;
 }
 
-
-int64_t post_input(char * dat)
+int main()
 {
-        char * url = HASTEBIN_URL "/documents";
-        CURL * curl;
-        CURLcode res;
+    Vector paste;
+    char c;
 
-        curl = curl_easy_init();
+    initVector(&paste);
+    while((c = fgetc(stdin)) != EOF)
+    {
+        appendVector(&paste, c);
+    }
 
-        if (curl) {
-                curl_easy_setopt(curl, CURLOPT_URL, url);
-                curl_easy_setopt(curl, CURLOPT_POSTFIELDS, dat);
-                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, return_url);
+    if(paste.array[paste.used-1] == '\n')
+    {
+        paste.array[paste.used-1] = 0;
+    }
 
-                res = curl_easy_perform(curl);
+    printf("%s", post_paste(paste.array));
 
-                curl_easy_cleanup(curl);
-        }
-
-        curl_global_cleanup();
-
-        return 0;
-}
-
-
-int main(void)
-{
-        char * dat;
-
-        dat = auto_realloc(stdin, 1024);
-
-        post_input(dat);
-        free(dat);
-
-        return 0;
+    free(paste.array);
+    paste.array = NULL;
+    paste.used = 0;
+    paste.size = 0;
+    return 0;
 }
