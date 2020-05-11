@@ -1,5 +1,6 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <json-c/json_tokener.h>
 #include <json-c/json_object.h>
 #include <curl/curl.h>
@@ -37,7 +38,10 @@ uint8_t * auto_realloc(FILE * fp, size_t size)
                 }
         }
 
-        str[len++] = '\0';
+        len = strlen(str);
+        if (str[len-1] == '\n'){
+            str[len-1] = 0;
+        }
 
         return realloc(str, sizeof(uint8_t) * len);
 }
@@ -51,7 +55,7 @@ size_t return_url(void * buffer, size_t size, size_t nmemb, void * userp)
         parsed_json = json_tokener_parse(buffer);
 
         json_object_object_get_ex(parsed_json, "key", & key);
-        printf("\n" HASTEBIN_URL "/%s\n", json_object_get_string(key));
+        printf(HASTEBIN_URL "/%s\n", json_object_get_string(key));
 }
 
 
