@@ -18,13 +18,13 @@
  */
 
 
-uint8_t * auto_realloc(FILE * fp, size_t size)
+char * auto_realloc(FILE * fp, size_t size)
 {
-        uint8_t * str;
-        int64_t ch;
+        char * str;
+        int ch;
         size_t len = 0;
 
-        str = realloc(NULL, sizeof(uint8_t) * size);
+        str = realloc(NULL, sizeof(int) * size);
 
         if (!str) return str;
 
@@ -32,7 +32,7 @@ uint8_t * auto_realloc(FILE * fp, size_t size)
                 str[len++] = ch;
 
                 if (len == size) {
-                        str = realloc(str, sizeof(uint8_t) * (size += 1024));
+                        str = realloc(str, sizeof(int) * (size += 1024));
 
                         if (!str) return str;
                 }
@@ -43,7 +43,7 @@ uint8_t * auto_realloc(FILE * fp, size_t size)
             str[len-1] = 0;
         }
 
-        return realloc(str, sizeof(uint8_t) * len);
+        return realloc(str, sizeof(int) * len);
 }
 
 
@@ -56,20 +56,20 @@ size_t return_url(void * buffer, size_t size, size_t nmemb, void * userp)
 
         json_object_object_get_ex(parsed_json, "key", & key);
         printf(HASTEBIN_URL "/%s\n", json_object_get_string(key));
+
+        return 0;
 }
 
 
-int64_t post_input(uint8_t * dat)
+int64_t post_input(char * dat)
 {
-        uint8_t * url = HASTEBIN_URL "/documents";
+        char * url = HASTEBIN_URL "/documents";
         CURL * curl;
         CURLcode res;
 
         curl = curl_easy_init();
 
         if (curl) {
-                struct curl_slist * headers = NULL;
-
                 curl_easy_setopt(curl, CURLOPT_URL, url);
                 curl_easy_setopt(curl, CURLOPT_POSTFIELDS, dat);
                 curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, return_url);
@@ -85,9 +85,9 @@ int64_t post_input(uint8_t * dat)
 }
 
 
-int64_t main(void)
+int main(void)
 {
-        uint8_t * dat;
+        char * dat;
 
         dat = auto_realloc(stdin, 1024);
 
