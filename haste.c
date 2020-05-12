@@ -3,7 +3,7 @@
 #include <curl/curl.h>
 #include "vector.h"
 
-#define HASTEBIN_URL "https://haste.r3valkyrie.com"
+#define HASTEBIN_URL "https://hastebin.com"
 
 /*
  * Takes input from stdin and posts it to a specified hastebin.
