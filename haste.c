@@ -21,6 +21,7 @@ char print_url(char *res)
     int start = 8;
     int len = 10;
     printf(HASTEBIN_URL "/%.*s\n", len, res + start);
+    return 0;
 }
 
 CURLcode post_paste(char * data)
